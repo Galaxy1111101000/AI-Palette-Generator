@@ -7,7 +7,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 load_dotenv()
 
@@ -15,6 +15,14 @@ class Colour(BaseModel):
     name: str = Field(description="A descriptive name for the colour")
     hex: str = Field(description="A 6 digit hexadecimal colour value")
     role: str = Field(description="The colour's role, such as background, text, primary or accent")
+
+    @field_validator("hex")
+    @classmethod
+    def normalize_hex(cls, value: str) -> str:
+        value = value.strip().lstrip("#")
+        if len(value) != 6 or any(character not in "0123456789abcdefABCDEF" for character in value):
+            raise ValueError("hex must be a six-digit hexadecimal colour value")
+        return f"#{value.upper()}"
 
 class Palette(BaseModel):
     title: str = Field(description="A short name for the palette")

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette Generator</title>
+
+    <style>
+        body {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: Arial, sans-serif;
+            background: #f4f0e8;
+            color: #29251f;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 3rem;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #c7bfb2;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 14px 20px;
+            border: 0;
+            border-radius: 6px;
+            background: #29251f;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background: #655343;
+        }
+
+        .error {
+            color: #a33a2b;
+        }
+
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .swatch {
+            min-height: 190px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            gap: 6px;
+            border-radius: 8px;
+            color: white;
+            text-shadow: 0 1px 3px rgb(0 0 0 / 50%);
+            box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
+        }
+
+        .swatch strong {
+            font-size: 1.1rem;
+        }
+
+        .swatch span,
+        .swatch small {
+            font-family: monospace;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Palette Generator</h1>
+
+    <form method="POST" action="/generate">
+        <input
+            type="text"
+            name="description"
+            placeholder="A calm coastal palette with ocean blue and warm sand"
+            value="{{ description or '' }}"
+            required
+        >
+
+        <button type="submit">Generate palette</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if palette %}
+        <h2>{{ palette.title }}</h2>
+        <p>{{ palette.description }}</p>
+
+        <section class="palette">
+            {% for colour in palette.colours %}
+                <article
+                    class="swatch"
+                    style="background-color: {{ colour.hex }}"
+                >
+                    <strong>{{ colour.name }}</strong>
+                    <span>{{ colour.hex }}</span>
+                    <small>{{ colour.role }}</small>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+</body>
+</html>
