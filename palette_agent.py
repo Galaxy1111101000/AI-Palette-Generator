@@ -3,6 +3,7 @@ from typing import List
 
 from html import escape
 from pathlib import Path
+from PIL import Image 
 
 from dotenv import load_dotenv
 from langchain.agents import create_agent
@@ -58,6 +59,24 @@ agent = create_agent(
     """
 )
 
+def extract_image_colours(image_path: str, colour_count: int = 5,) -> list[str]:
+    """ Return representative colours from an image as hexadecimnal values
+    """
+    with Image.open(image_path) as image:
+        image = image.convert("RGB")
+        image.thumbnail((200,200))
+        reduced = image.quantize(colors=colour_count)
+        palette = reduced.getpalette()
+
+
+        colours = []
+        for _pixel_count, palette_index in reduced.getcolors():
+            offset = palette_index * 3
+            red, green, blue = palette[offset:offset + 3]
+            colours.append("#{:02X}{:02X}{:02X}".format(red, green, blue))
+
+        return colours
+
 def generate_palette(description: str) -> Palette:
     result = agent.invoke(
         {
@@ -71,6 +90,16 @@ def generate_palette(description: str) -> Palette:
     )
 
     return result["structured_response"]
+
+def generate_palette_from_image(image_path: str) -> Palette:
+    image_colours = extract_image_colours(image_path)
+    description = (
+        "Create a usable design palette from these colours sampled from an uploaded photo: "
+        + ", ".join(image_colours)
+        + ". Keep the sampled colours recognizable, improve contrast where needed, "
+          "and assign qualities like background, text, primary, secondary, or accent."
+    )
+    return generate_palette(description)
 
 def create_html_page(palette: Palette) -> None:
     template_path = Path("palette-agent/palette.html")
