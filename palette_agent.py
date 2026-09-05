@@ -1,6 +1,9 @@
 import os
 from typing import List
 
+from html import escape
+from pathlib import Path
+
 from dotenv import load_dotenv
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
@@ -61,6 +64,31 @@ def generate_palette(description: str) -> Palette:
 
     return result["structured_response"]
 
+def create_html_page(palette: Palette) -> None:
+    template_path = Path("palette-agent/palette.html")
+    output_path = Path("palette_preview.html")
+
+    template = template_path.read_text(encoding="utf-8")
+
+
+    swatches = "\n".join(
+        f"""
+        <article class="swatch" style="background-color: {escape(colour.hex)}">
+            <strong>{escape(colour.name)}</strong>
+            <strong>{escape(colour.hex)}</strong>
+            <strong>{escape(colour.role)}</strong>
+        </article>
+        """
+
+        for colour in palette.colours
+    )
+
+    page = template.replace("{{TITLE}}", escape(palette.title))
+    page = page.replace("{{DESCRIPTION}}", escape(palette.description))
+    page = page.replace("{{SWATCHES}}", swatches)
+
+    output_path.write_text(page, encoding="utf-8")
+
 if __name__ == "__main__":
     description = input("Description:")
 
@@ -74,3 +102,6 @@ if __name__ == "__main__":
 
     for colour in palette.colours:
         print(f"\n {colour.name}: {colour.hex}, {colour.role}")
+
+    create_html_page(palette)
+    print("Saved")

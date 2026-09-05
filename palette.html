@@ -3,11 +3,14 @@
     <head>
         <meta name="viewport" content="width=device-width", initial-scale=1.0">
         <title>Colour Palette</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1 id="title">Colour Palette</h1>
-        <p id="description">Your generated palette will appear here.</p>
+        <h1 id="title">{{TITLE}}</h1>
+        <p id="description">{{DESCRIPTION}}</p>
 
-        <section id="palette" class="palette"></section>
+        <section id="palette" class="palette">
+            {{SWATCHES}}
+        </section>
     </body>
 </html>
