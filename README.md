@@ -12,5 +12,14 @@ With the ability to generate a palette based on text or image, modify colours wi
 ## Here's How it works
 
 First, navigate to the landing page and input your colour/image
-![alt text](https://github.com/Galaxy1111101000/AI-Palette-Generator/images/image1.png "Logo Title Text 1")
+![alt text](https://github.com/Galaxy1111101000/AI-Palette-Generator/blob/master/images/image1.png)
+
+Then, put your text as input, which leads to you to this page!
+![alt text](https://github.com/Galaxy1111101000/AI-Palette-Generator/blob/master/images/image2.png)
+
+Select the preview page to see your colour scheme all together
+![alt text](https://github.com/Galaxy1111101000/AI-Palette-Generator/blob/master/images/image3.png)
+
+And finally, modify the colour palette as follows
+![alt text](https://github.com/Galaxy1111101000/AI-Palette-Generator/blob/master/images/image4.png)
 
