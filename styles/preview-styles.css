@@ -1,0 +1,179 @@
+:root {
+    /* Fallback values used only when the preview is opened without a palette. */
+    --background: #F4F0E8;
+    --surface: #FFF8EA;
+    --primary: #B7612D;
+    --dark: #1A0E0F;
+    --accent: #75361D;
+    --highlight: #D99A52;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 90% 5%, rgb(255 255 255 / 80%), transparent 30%),
+        var(--background);
+    color: var(--dark);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+.back-button {
+    position: fixed;
+    z-index: 2;
+    top: 22px;
+    left: clamp(18px, 4vw, 52px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgb(26 14 15 / 18%);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 28%);
+    color: var(--dark);
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.35rem;
+    line-height: 1;
+    transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.back-button:hover {
+    background: var(--surface);
+    border-color: rgb(26 14 15 / 35%);
+    transform: translateX(-2px);
+}
+
+.back-button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+}
+.back-button span {
+    display: block;
+    line-height: 1;
+    transform: translateY(-1px);
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 8vw, 120px);
+    align-items: center;
+    max-width: 1280px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 80px clamp(24px, 7vw, 96px);
+}
+
+.eyebrow {
+    margin: 0 0 18px;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: bold;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    max-width: 650px;
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(3rem, 6vw, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: 0;
+}
+
+.hero p {
+    max-width: 480px;
+    margin: 28px 0;
+    font-size: 1.15rem;
+    line-height: 1.6;
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 14px 20px;
+    border-radius: 5px;
+    background: var(--primary);
+    color: var(--surface);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero-button:hover {
+    background: var(--highlight);
+    color: var(--dark);
+}
+
+.preview-card {
+    padding: clamp(28px, 5vw, 56px);
+    border: 1px solid rgb(26 14 15 / 12%);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 24px 60px rgb(26 14 15 / 14%);
+    transform: rotate(1deg);
+}
+
+.preview-card h2 {
+    margin-top: 0;
+    color: var(--primary);
+    font-family: Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.preview-card p {
+    color: color-mix(in srgb, var(--dark) 72%, var(--surface));
+    line-height: 1.6;
+}
+
+.palette-swatches {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.palette-swatch {
+    min-height: 118px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+    border-radius: 5px;
+    color: white;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 45%);
+}
+
+.palette-swatch strong {
+    font-size: 0.95rem;
+}
+
+.palette-swatch span {
+    font-family: monospace;
+    font-size: 0.82rem;
+}
+
+@media (max-width: 700px) {
+    .hero {
+        display: block;
+        min-height: auto;
+        padding-top: 64px;
+        padding-bottom: 64px;
+    }
+
+    .back-button {
+        top: 18px;
+        left: 16px;
+    }
+
+    .preview-card {
+        margin-top: 40px;
+        transform: none;
+    }
+}

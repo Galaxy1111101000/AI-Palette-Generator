@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette Preview</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='preview-styles.css') }}">
+</head>
+<body style="--background: {{ palette_colours[0] }}; --surface: {{ palette_colours[1] }}; --primary: {{ palette_colours[2] }}; --dark: {{ palette_colours[3] }}; --accent: {{ palette_colours[4] }}; --highlight: {{ palette_colours[5] }};">
+    <button
+        class="back-button"
+        type="button"
+        onclick="goBack()"
+        aria-label="Back to palette"
+        title="Back to palette"
+    >
+        <span aria-hidden="true">&larr;</span>
+    </button>
+
+    <main class="hero">
+        <section>
+            <p class="eyebrow">Palette in practice</p>
+            <h1>Design with a warmer point of view.</h1>
+
+            <p>
+                A sample landing page showing how a generated palette can shape
+                typography, buttons, surfaces, and visual hierarchy.
+            </p>
+
+            <a class="hero-button" href="/">Create a palette</a>
+        </section>
+
+        <aside class="preview-card">
+            <h2>Palette in use</h2>
+            <p>These swatches show the colours from the generated palette in use.</p>
+
+            <section class="palette-swatches" aria-label="Generated colour swatches">
+                {% for colour in palette_colours %}
+                    <article
+                        class="palette-swatch"
+                        style="background-color: {{ colour }}"
+                    >
+                        <strong>Colour {{ loop.index }}</strong>
+                        <span>{{ colour }}</span>
+                    </article>
+                {% endfor %}
+            </section>
+        </aside>
+    </main>
+
+    <script>
+        function goBack() {
+            const previousPage = document.referrer;
+            const cameFromThisSite = previousPage
+                && new URL(previousPage).origin === window.location.origin;
+
+            if (cameFromThisSite) {
+                window.history.back();
+                return;
+            }
+
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>
