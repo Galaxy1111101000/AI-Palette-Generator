@@ -23,3 +23,16 @@ Select the preview page to see your colour scheme all together
 And finally, modify the colour palette as follows
 ![alt text](https://github.com/Galaxy1111101000/AI-Palette-Generator/blob/master/images/image4.png)
 
+## Progress
+As of writing this, I have a fully functioning agent and web view to use!
+
+However, this project is still growing, and I'd like to make a few new additions within the next month:
+- deploying it to the world wide web
+- Creating a specific export template (instead of exporting the web page directly)
+- Creating a view to see palettes under different colour blindness conditions
+- Miscellaneous UI updates/Quality of life adjustments
+- Any other features anyone can think of!
+
+Technologies used: HTML, CSS, Python(Langchain, Flask)
+
+I had a lot of fun with this project! I mainly did it to learn about building agents, and make my own spin with something that I would use in my every day life!
