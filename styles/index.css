@@ -1,5 +1,5 @@
 body {
-    max-width: 1000px;
+    max-width: 1280px;
     margin: 40px auto;
     padding: 0 20px;
     font-family: Arial, sans-serif;
@@ -13,16 +13,28 @@ h1 {
 }
 
 form {
-    display: flex;
-    gap: 10px;
+    width: min(100%, 1120px);
     margin: 30px 0;
 }
 
-input {
-    flex: 1;
-    padding: 14px;
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px;
     border: 1px solid #c7bfb2;
-    border-radius: 6px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 8px 20px rgb(55 45 35 / 8%);
+}
+
+.search-bar input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    border: 0;
+    outline: 0;
     font-size: 1rem;
 }
 
@@ -34,6 +46,47 @@ button {
     color: white;
     cursor: pointer;
     font-size: 1rem;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex: 0 0 auto;
+    max-width: 150px;
+    padding: 10px 12px;
+    overflow: hidden;
+    border: 1px solid #c7bfb2;
+    border-radius: 5px;
+    color: #29251f;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.upload-button:hover {
+    background: #f4f0e8;
+}
+
+.search-bar > button {
+    flex: 0 0 auto;
+    padding: 12px 18px;
+}
+
+.change-colour-button {
+    margin-top: 12px;
+    padding: 8px 10px;
+    border: 1px solid rgb(255 255 255 / 45%);
+    border-radius: 4px;
+    background: #29251f;
+    color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
 }
 
 button:hover {
@@ -73,7 +126,7 @@ button:hover {
     font-family: monospace;
 }
 
-.change-colour-button {
+/*.change-colour-button {
     margin-top: 12px;
     padding: 8px 10px;
     border: 1px solid rgb(255 255 255 / 45%);
@@ -83,6 +136,7 @@ button:hover {
     cursor: pointer;
     font-size: 0.85rem;
 }
+    */
 
 .change-colour-button:hover {
     background: rgb(0 0 0 / 35%);
@@ -103,12 +157,95 @@ button:hover {
     background: #6f482f;
 }
 
+.palette-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.palette-actions .preview-button {
+    margin-top: 0;
+}
+
+.export-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #8b5e3c;
+    border-radius: 5px;
+    background: transparent;
+    color: #8b5e3c;
+}
+
+.export-button:hover {
+    background: #8b5e3c;
+    color: white;
+}
+
+.export-button svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
 @media (max-width: 600px) {
-    form {
-        flex-direction: column;
+    .search-bar {
+        flex-wrap: wrap;
     }
 
-    button {
-        width: 100%;
+    .search-bar input[type="text"] {
+        flex-basis: 100%;
+    }
+
+    .upload-button,
+    .search-bar > button {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+@media print {
+    @page {
+        margin: 18mm;
+    }
+
+    body {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        background: white;
+        color: #29251f;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    form,
+    .error,
+    .palette-actions,
+    .change-colour-button {
+        display: none;
+    }
+
+    h1 {
+        margin-top: 0;
+    }
+
+    .palette {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .swatch {
+        min-height: 180px;
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
     }
 }

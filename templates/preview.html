@@ -27,7 +27,15 @@
                 typography, buttons, surfaces, and visual hierarchy.
             </p>
 
-            <a class="hero-button" href="/">Create a palette</a>
+            <button
+                class="hero-button export-button"
+                type="button"
+                onclick="exportPalette()"
+                aria-label="Export palette as PDF"
+            >
+                <span aria-hidden="true">&#8681;</span>
+                Export as PDF
+            </button>
         </section>
 
         <aside class="preview-card">
@@ -60,6 +68,10 @@
             }
 
             window.location.href = "/";
+        }
+
+        function exportPalette() {
+            window.print();
         }
     </script>
 </body>

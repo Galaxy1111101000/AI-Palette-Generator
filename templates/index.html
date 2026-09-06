@@ -15,22 +15,28 @@
         action="/generate"
         enctype="multipart/form-data"
     >
-        <input
-            type="text"
-            name="description"
-            placeholder="A calm coastal palette with ocean blue and warm sand"
-            value="{{ description or '' }}"
-        >
+        <div class="search-bar">
+            <input
+                type="text"
+                name="description"
+                placeholder="A calm coastal palette with ocean blue and warm sand"
+                value="{{ description or '' }}"
+            >
 
-        <label for="photo">Or upload a photo</label>
-        <input
-            id="photo"
-            type="file"
-            name="photo"
-            accept="image/png,image/jpeg,image/webp"
-        />
+            <label class="upload-button" for="photo" title="Upload a photo">
+                <span aria-hidden="true">+</span>
+                <span class="upload-label">Photo</span>
+            </label>
+            <input
+                id="photo"
+                class="file-input"
+                type="file"
+                name="photo"
+                accept="image/png,image/jpeg,image/webp"
+            >
 
-        <button type="submit">Generate palette</button>
+            <button type="submit">Generate</button>
+        </div>
     </form>
 
     {% if error %}
@@ -41,14 +47,28 @@
         <h2>{{ palette.title }}</h2>
         <p>{{ palette.description }}</p>
 
-        <a
-            class="preview-button"
-            id="preview-button"
-            href="/preview?colours={{ palette.colours | map(attribute='hex') | join(',') | urlencode }}"
-            onclick="openPreview(event)"
-        >
-            Preview landing page
-        </a>
+        <div class="palette-actions">
+            <a
+                class="preview-button"
+                id="preview-button"
+                href="/preview?colours={{ palette.colours | map(attribute='hex') | join(',') | urlencode }}"
+                onclick="openPreview(event)"
+            >
+                Preview landing page
+            </a>
+
+            <button
+                class="export-button"
+                type="button"
+                onclick="exportPalettePdf()"
+                aria-label="Export palette as PDF"
+                title="Export palette as PDF"
+            >
+                <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                    <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v2h14v-2" />
+                </svg>
+            </button>
+        </div>
 
         <section class="palette">
             {% for colour in palette.colours %}
@@ -205,6 +225,10 @@
             window.location.href = previewUrl;
         }
 
+        function exportPalettePdf() {
+            window.print();
+        }
+
         function getPaletteColours() {
             return Array.from(document.querySelectorAll(".swatch"))
                 .map(swatch => swatch.dataset.color);
@@ -240,6 +264,15 @@
             .addEventListener("submit", () => {
                 localStorage.removeItem("palette-agent-colours");
             });
+
+        document.querySelector("#photo").addEventListener("change", event => {
+            const fileName = event.target.files[0]?.name;
+            const uploadLabel = document.querySelector(".upload-label");
+
+            if (fileName) {
+                uploadLabel.textContent = fileName;
+            }
+        });
 
         restorePaletteColours();
     </script>
